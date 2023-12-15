@@ -14,12 +14,13 @@ def draw_multiple_line_text(
     Draw multiline text over given image
     """
     draw = ImageDraw.Draw(image)
-    Fontperm = font.getsize(text)
     image_width, image_height = image.size
     lines = textwrap.wrap(text, width=wrap)
-    y = (image_height / 2) - (((Fontperm[1] + (len(lines) * padding) / len(lines)) * len(lines)) / 2)
+    line_height = font.getsize('A')[1]  # Height of a line
+    text_height = len(lines) * (line_height + padding) - padding  # Total height of the text block
+    y = (image_height - text_height) / 2  # Initial y position
     for line in lines:
-        line_width, line_height = font.getsize(line)
+        line_width, _ = font.getsize(line)
         if transparent:
             shadowcolor = "black"
             for i in range(1, 5):
@@ -51,7 +52,7 @@ def draw_multiple_line_text(
         y += line_height + padding
 
 
-def imagemaker(theme, reddit_obj: dict, txtclr, padding=2, transparent=False) -> None:
+def imagemaker(theme, reddit_obj: dict, txtclr, padding=4, transparent=False) -> None:
     """
     Render Images for video
     """

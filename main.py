@@ -59,7 +59,6 @@ def main(POST_ID=None) -> None:
     chop_background(bg_config, length, reddit_object)
     make_final_video(number_of_comments, length, reddit_object, bg_config)
 
-
 def run_many(times) -> None:
     for x in range(1, times + 1):
         print_step(
@@ -79,11 +78,6 @@ def shutdown() -> NoReturn:
 
 
 if __name__ == "__main__":
-    if sys.version_info.major != 3 or sys.version_info.minor != 10:
-        print(
-            "Hey! Congratulations, you've made it so far (which is pretty rare with no Python 3.10). Unfortunately, this program only works on Python 3.10. Please install Python 3.10 and try again."
-        )
-        # sys.exit()
     ffmpeg_install()
     directory = Path().absolute()
     config = settings.check_toml(
@@ -91,21 +85,21 @@ if __name__ == "__main__":
     )
     config is False and sys.exit()
 
-    if (
-        not settings.config["settings"]["tts"]["tiktok_sessionid"]
-        or settings.config["settings"]["tts"]["tiktok_sessionid"] == ""
-    ) and config["settings"]["tts"]["voice_choice"] == "tiktok":
-        print_substep(
-            "TikTok voice requires a sessionid! Check our documentation on how to obtain one.",
-            "bold red",
-        )
-        sys.exit()
     try:
         if config["reddit"]["thread"]["post_id"]:
             for index, post_id in enumerate(config["reddit"]["thread"]["post_id"].split("+")):
                 index += 1
+                if index % 10 == 1:
+                    ordinal_suffix = "st"
+                elif index % 10 == 2:
+                    ordinal_suffix = "nd"
+                elif index % 10 == 3:
+                    ordinal_suffix = "rd"
+                else:
+                    ordinal_suffix = "th"
+                num_posts = len(config["reddit"]["thread"]["post_id"].split("+"))
                 print_step(
-                    f'on the {index}{("st" if index % 10 == 1 else ("nd" if index % 10 == 2 else ("rd" if index % 10 == 3 else "th")))} post of {len(config["reddit"]["thread"]["post_id"].split("+"))}'
+                    f'on the {index}{ordinal_suffix} post of {num_posts}'
                 )
                 main(post_id)
                 Popen("cls" if name == "nt" else "clear", shell=True).wait()
@@ -120,7 +114,6 @@ if __name__ == "__main__":
         print_markdown("Please check your credentials in the config.toml file")
         shutdown()
     except Exception as err:
-        config["settings"]["tts"]["tiktok_sessionid"] = "REDACTED"
         config["settings"]["tts"]["elevenlabs_api_key"] = "REDACTED"
         print_step(
             f"Sorry, something went wrong with this version! Try again, and feel free to report this issue at GitHub or the Discord community.\n"

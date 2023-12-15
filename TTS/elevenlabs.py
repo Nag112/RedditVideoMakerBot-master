@@ -16,7 +16,6 @@ voices = [
     "Sam",
 ]
 
-
 class elevenlabs:
     def __init__(self):
         self.max_chars = 2500

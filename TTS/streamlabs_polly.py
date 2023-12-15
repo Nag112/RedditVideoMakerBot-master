@@ -47,7 +47,6 @@ class StreamlabsPolly:
         response = requests.post(self.url, data=body)
         if not check_ratelimit(response):
             self.run(text, filepath, random_voice)
-
         else:
             try:
                 voice_data = requests.get(response.json()["speak_url"])

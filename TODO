@@ -1,0 +1,6 @@
+1. Fix teh last screen bug i.e last screen ahs no text but only audio
+2. Add a new feature to take the text to generate the video from from a file or subreddit
+3. Update the reddit code to take the `url` instead of post id and subreddit name
+4. Find and add a new TTS engine that can be used for free
+
+

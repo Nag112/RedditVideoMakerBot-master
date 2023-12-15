@@ -3,7 +3,6 @@ from typing import Tuple
 from rich.console import Console
 
 from TTS.GTTS import GTTS
-from TTS.TikTok import TikTok
 from TTS.aws_polly import AWSPolly
 from TTS.engine_wrapper import TTSEngine
 from TTS.pyttsx import pyttsx
@@ -18,7 +17,6 @@ TTSProviders = {
     "GoogleTranslate": GTTS,
     "AWSPolly": AWSPolly,
     "StreamlabsPolly": StreamlabsPolly,
-    "TikTok": TikTok,
     "pyttsx": pyttsx,
     "ElevenLabs": elevenlabs,
 }
